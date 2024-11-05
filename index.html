@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random Number Selector</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f4;
+  }
+  .container {
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    text-align: center;
+  }
+  .container input {
+    margin-bottom: 10px;
+    padding: 5px;
+    width: 100%;
+    font-size: 1em;
+  }
+  .container button {
+    padding: 10px;
+    width: 100%;
+    font-size: 1em;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  .container button:hover {
+    background-color: #45a049;
+  }
+  .result {
+    margin-top: 15px;
+    font-size: 1.2em;
+    color: #333;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h2>Random Number Selector</h2>
+  <input type="number" id="startNum" placeholder="Enter Start Number">
+  <input type="number" id="endNum" placeholder="Enter End Number">
+  <input type="number" id="qtyNum" placeholder="Enter Quantity">
+  <button onclick="generateNumbers()">Generate</button>
+  <div class="result" id="result"></div>
+</div>
+
+<script>
+  function generateNumbers() {
+    const startNum = parseInt(document.getElementById('startNum').value);
+    const endNum = parseInt(document.getElementById('endNum').value);
+    const qtyNum = parseInt(document.getElementById('qtyNum').value);
+    const resultDiv = document.getElementById('result');
+
+    if (isNaN(startNum) || isNaN(endNum) || isNaN(qtyNum)) {
+      resultDiv.textContent = 'Please enter valid numbers!';
+      return;
+    }
+    if (startNum >= endNum) {
+      resultDiv.textContent = 'End number must be greater than start number!';
+      return;
+    }
+    if (qtyNum > (endNum - startNum + 1)) {
+      resultDiv.textContent = 'Quantity exceeds range of unique numbers!';
+      return;
+    }
+
+    const numbers = [];
+    while (numbers.length < qtyNum) {
+      const randomNum = Math.floor(Math.random() * (endNum - startNum + 1)) + startNum;
+      if (!numbers.includes(randomNum)) {
+        numbers.push(randomNum);
+      }
+    }
+
+    resultDiv.textContent = 'Generated Numbers: ' + numbers.join(', ');
+  }
+</script>
+
+</body>
+</html>
